@@ -23,14 +23,17 @@ app.get("/api/:time", function (req, res) {
   let { time } = req.params;
   if (isNaN(time)) {
     let date = new Date(time);
+    if (date == "Invalid Date") {
+      return res.json({ error: "Invalid Date" });
+    }
     res.json({
-      unix: Math.floor(date.getTime() / 1000),
+      unix: Math.floor(date.getTime()),
       utc: date.toUTCString(),
     });
   } else {
-    let date = new Date(Number(time) * 1000);
+    let date = new Date(Number(time));
     res.json({
-      unix: Math.floor(date.getTime() / 1000),
+      unix: Math.floor(date.getTime()),
       utc: date.toUTCString(),
     });
   }
